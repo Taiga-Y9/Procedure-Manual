@@ -36,19 +36,23 @@ sudo ufw status
 4. プロジェクトディレクトリの作成 
 mkdir /web-db-project
 cd /web-db-project
-5. Web 公開用ファイル (DocumentRoot) の準備 mkdir htdocs
+5. Web 公開用ファイル (DocumentRoot) の準備 
+mkdir htdocs
+
 nano htdocs/index.html
+
 ファイル内容: htdocs/index.html 
-<!DOCTYPE html>
-<html>
-<head>
-<title>Web/DB Test Page</title>
-</head>
-<body>
-<h1>Docker Compose Web DB (Raspberry Pi)</h1>
-<p>This page is served by the 'web' container on port 8080. </p>
-</body>
-</html>
+
+< !DOCTYPE html>
+< html>
+< head>
+< title>Web/DB Test Page</>
+</>
+< body>
+< h1>Docker Compose Web DB (Raspberry Pi)</>
+< p>This page is served by the 'web' container on port 8080. </>
+</>
+</>
 
 6. Docker Compose 構成ファイル (compose.yaml) の作成Web サーバー (httpd:latest) とデータベース (mysql:latest) を定義します 
 
