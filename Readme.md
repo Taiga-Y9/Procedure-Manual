@@ -51,20 +51,25 @@ nano htdocs/index.html
 </html>
 
 6. Docker Compose 構成ファイル (compose.yaml) の作成Web サーバー (httpd:latest) とデータベース (mysql:latest) を定義します 
-nano compose.yaml
+
+## nano compose.yaml
 ファイル内容: compose.yaml 
-services:
-  ## Web サーバー (Apache)
+
+services: ##Web サーバー (Apache)
+
   web:
+
 image: httpd:latest ## Docker Hub から最新の Apache イメージを使用
+
 container_name: apache-server-rpi
+
     ports:
       "8080:80" ## ホストの 8080 ポートをコンテナの 80 ポートにマッピング
     volumes:
       ## ホストの htdocs フォルダをコンテナの公開フォルダにマウント
       -./htdocs:/usr/local/apache2/htdocs/
 restart: always
-  ## データベースサーバー (MySQL)
+  ##データベースサーバー (MySQL)
   db:
 image: mysql:latest ## Docker Hub から最新の MySQL イメージを使用
 container_name: mysql-db-rpi
@@ -78,21 +83,34 @@ container_name: mysql-db-rpi
       ## データベースデータを永続化するボリュームを定義
       -db_data:/var/lib/mysql
 restart: always
-
-## データの永続化用ボリューム定義 (ホストの /var/lib/docker/volumes/ に保存される)t]volumes:
+##データの永続化用ボリューム定義 (ホストの /var/lib/docker/volumes/ に保存される)
+volumes:
 db_data:
+
 7. Docker Compose の実行 19設定ファイルに基づき、コンテナ群を作成し、バックグラウンド (-d) で起動します docker compose up -d 
-4. 動作確認と検証 211. コンテナの起動状態確認 22すべてのサービス (web, db) が Up 状態であることを確認します 
+
+## 4. 動作確認と検証
+コンテナの起動状態確認 
+すべてのサービス (web, db) が Up 状態であることを確認します
 docker compose ps
 Web アクセス確認 (完成条件1の検証) 
 クライアント PC のブラウザからアクセスします(Raspberry Pi の IP アドレスは 192.168.1.50 と仮定 27)
+
 http://192.168.1.50:8080 にアクセス 
+
 期待される結果: 「Docker Compose Web + DB (Raspberry Pi)」 と書かれたページが表示される 
+
 3. ログ確認
-Web コンテナのアクセスログを確認し、アクセスが記録されていることを検証します
+
+Web コンテナのアクセスログを確認し、アクセスが記録されて
+いることを検証します
+
 docker compose logs web
-期待される出力例 (末尾) 32apache-server-rpi 192.168.1.1 [07/Dec/2025:12:00:00 +0000] "GET / HTTP/1.1" 200 206, 106
+
+期待される出力例 (末尾) apache-server-rpi 192.168.1.1 [07/Dec/2025:12:00:00 +0000] "GET / HTTP/1.1" 200 206
+
 4. 永続化ボリュームの確認 (完成条件3の検証) 33ボリュームが作成されたことを確認します
+
 docker volume ls
 
 ## トラブルシューティング
